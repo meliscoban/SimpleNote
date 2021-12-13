@@ -28,6 +28,8 @@ namespace SimpleNote.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(x => x.AddDefaultPolicy(configurePolicy => configurePolicy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin()));
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("conString")));
 
             services.AddControllers();
@@ -50,6 +52,8 @@ namespace SimpleNote.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
